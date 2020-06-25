@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -14,12 +16,23 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
----
-extends: default
 
-rules:
-  line-length:
-    max: 110
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+SPEC_DIR="${SCRIPT_DIR}/../../airflow/api_connexion/openapi"
 
-ignore: |
-  clients/go/airflow/
+OPENAPI_GENERATOR_CLI_VER=4.3.1
+GIT_USER=${GIT_USER:-apache}
+
+function gen_client {
+    lang=$1
+    shift
+    docker run --rm \
+        -v "${SPEC_DIR}/v1.yaml:/spec" \
+        -v "${OUTPUT_DIR}:/output" \
+        openapitools/openapi-generator-cli:v${OPENAPI_GENERATOR_CLI_VER} \
+        generate \
+        --input-spec "/spec" \
+        --generator-name "${lang}" \
+        --git-user-id "${GIT_USER}" \
+        --output "/output" "$@"
+}

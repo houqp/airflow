@@ -24,8 +24,7 @@ requirements.txt
 dist
 build
 airflow.egg-info
-apache_airflow.egg-info
-.idea
+apache_airflow.egg-info .idea
 metastore_db
 .*sql
 .*svg
@@ -91,3 +90,5 @@ input_notebook.ipynb
 
 # .git might be a file in case of worktree
 .git
+
+clients/*

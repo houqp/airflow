@@ -25,11 +25,11 @@ repos:
     rev: v1.1.7
     hooks:
       - id: forbid-tabs
-        exclude: ^docs/Makefile$
+        exclude: ^docs/Makefile$|^clients/go
       - id: insert-license
         name: Add license for all SQL files
         files: \.sql$
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         args:
           - --comment-style
           - "/*||*/"
@@ -38,7 +38,7 @@ repos:
           - --fuzzy-match-generates-todo
       - id: insert-license
         name: Add license for all other files
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         args:
           - --comment-style
           - "|#|"
@@ -49,7 +49,7 @@ repos:
           \.properties$|\.cfg$|\.conf$|\.ini$|\.ldif$|\.readthedocs$|\.service$|\.tf$|^Dockerfile.*$
       - id: insert-license
         name: Add license for all rst files
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         args:
           - --comment-style
           - "||"
@@ -60,7 +60,7 @@ repos:
       - id: insert-license
         name: Add license for all JS/CSS files
         files: \.(js|css)$
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         args:
           - --comment-style
           - "/**| *| */"
@@ -71,7 +71,7 @@ repos:
         name: Add license for all JINJA template files
         files: "^airflow/www/templates/.*\\.html$|^docs/templates/.*\\.html$|^airflow/contrib/plugins/\
 metastore_browser/templates/.*\\.html$|.*\\.jinja2"
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         args:
           - --comment-style
           - "{#||#}"
@@ -80,7 +80,7 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
           - --fuzzy-match-generates-todo
       - id: insert-license
         name: Add license for all shell files
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         files: ^breeze$|^breeze-complete$|\.sh$|\.bash$|\.bats$
         args:
           - --comment-style
@@ -90,7 +90,7 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
           - --fuzzy-match-generates-todo
       - id: insert-license
         name: Add license for all python files
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         types: [python]
         args:
           - --comment-style
@@ -100,7 +100,7 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
           - --fuzzy-match-generates-todo
       - id: insert-license
         name: Add license for all XML files
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         types: [xml]
         args:
           - --comment-style
@@ -110,7 +110,7 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
           - --fuzzy-match-generates-todo
       - id: insert-license
         name: Add license for all yaml files
-        exclude: ^\.github/.*$
+        exclude: ^\.github/.*$|^clients/go
         types: [yaml]
         args:
           - --comment-style
@@ -121,7 +121,7 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
       - id: insert-license
         name: Add license for all md files
         files: \.md$
-        exclude: ^\.github/.*$|PROVIDERS_CHANGES.*\.md
+        exclude: ^\.github/.*$|PROVIDERS_CHANGES.*\.md|^clients/go
         args:
           - --comment-style
           - "<!--|| -->"
@@ -147,10 +147,12 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
       - id: debug-statements
       - id: detect-private-key
       - id: end-of-file-fixer
+        exclude: ^clients/go
       - id: mixed-line-ending
       - id: check-executables-have-shebangs
       - id: check-xml
       - id: trailing-whitespace
+        exclude: ^clients/go
       - id: fix-encoding-pragma
         args:
           - --remove
@@ -191,6 +193,7 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
         language: docker_image
         entry: koalaman/shellcheck:stable -x -a
         files: ^breeze$|^breeze-complete$|\.sh$|^hooks/build$|^hooks/push$|\.bash$|\.bats$
+        exclude: ^clients/go
       - id: lint-openapi
         name: Lint OpenAPI using speccy
         language: docker_image
@@ -229,6 +232,7 @@ metastore_browser/templates/.*\\.html$|.*\\.jinja2"
         files: ^scripts/ci/libraries/_local_mounts.sh$|s^scripts/ci/docker_compose/local.yml"
         pass_filenames: false
         require_serial: true
+        exclude: ^clients/go
       - id: update-setup-cfg-file
         name: Update setup.cfg file with all licenses
         entry: "./scripts/ci/pre_commit_setup_cfg_file.sh"

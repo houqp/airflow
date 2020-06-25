@@ -170,6 +170,14 @@ jobs:
           echo "::set-output name=count::$?"
         id: pyfiles
 
+  test-openapi-client-generation:
+    name: "Test OpenAPI client generation"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: "Generate clients"
+        run: ./clients/gen/go.sh
+
   tests-kubernetes:
     timeout-minutes: 80
     name: "K8s: ${{matrix.kube-mode}} ${{matrix.python-version}} ${{matrix.kubernetes-version}}"

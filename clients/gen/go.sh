@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -14,12 +16,21 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
----
-extends: default
 
-rules:
-  line-length:
-    max: 110
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# shellcheck source=./clients/gen/common.sh
+source "${SCRIPT_DIR}/common.sh"
 
-ignore: |
-  clients/go/airflow/
+VERSION=0.1.0
+go_config=(
+    "packageVersion=${VERSION}"
+    "enumClassPrefix=true"
+)
+
+set -ex
+IFS=','
+OUTPUT_DIR=${SCRIPT_DIR}/../go/airflow \
+    gen_client go \
+    --package-name airflow \
+    --git-repo-id airflow/clients/go/airflow \
+    --additional-properties "${go_config[*]}"
